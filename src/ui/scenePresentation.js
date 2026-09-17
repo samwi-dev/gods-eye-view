@@ -47,7 +47,7 @@ export function renderSceneShots(
   if (!scene || scene.shots.length === 0) {
     const empty = document.createElement('div');
     empty.className = 'scene-shot-empty';
-    empty.textContent = 'No shots yet. Use CAPTURE SHOT to save current look.';
+    empty.textContent = '尚無鏡頭。使用「擷取鏡頭」以儲存目前畫面。';
     element.appendChild(empty);
     return;
   }
@@ -61,14 +61,14 @@ export function renderSceneShots(
     const label = document.createElement('div');
     label.className = 'scene-shot-label';
     label.textContent = shot.title;
-    label.title = 'Double-click to rename';
+    label.title = '雙擊以重新命名';
     listen(label, 'click', () => select(shot.id));
     listen(label, 'dblclick', () => {
       if (label.children.length) return;
       const input = document.createElement('input');
       input.type = 'text';
       input.className = 'scene-shot-rename';
-      input.setAttribute('aria-label', 'Shot name');
+      input.setAttribute('aria-label', '鏡頭名稱');
       input.value = shot.title;
       let finished = false;
       const finish = (save) => {
@@ -96,11 +96,11 @@ export function renderSceneShots(
     actions.className = 'scene-shot-actions';
     const loadButton = document.createElement('button');
     loadButton.className = 'scene-shot-btn';
-    loadButton.textContent = 'LOAD';
+    loadButton.textContent = '載入';
     listen(loadButton, 'click', () => load(scene.id, shot.id));
     const deleteButton = document.createElement('button');
     deleteButton.className = 'scene-shot-btn scene-shot-danger';
-    deleteButton.textContent = 'DEL';
+    deleteButton.textContent = '刪除';
     listen(deleteButton, 'click', () => remove(scene.id, shot.id));
     actions.appendChild(loadButton);
     actions.appendChild(deleteButton);

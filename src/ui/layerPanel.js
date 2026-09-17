@@ -3,19 +3,19 @@ export { layerFeedState } from '../data/feedState.js';
 import { GUIDANCE_STATUSES } from '../loadingFeedback.js';
 import { keySetupRequirement } from '../keySetupCore.mjs';
 const FEED_STATE_LABELS = Object.freeze({
-  nominal: 'ON',
-  loading: 'LOADING',
-  degraded: 'DEGRADED',
-  stale: 'STALE',
-  partial: 'PARTIAL',
-  fallback: 'FALLBACK',
-  unavailable: 'UNAVAILABLE',
+  nominal: '啟用中',
+  loading: '載入中',
+  degraded: '效能下降',
+  stale: '資料延遲',
+  partial: '部分可用',
+  fallback: '備援模式',
+  unavailable: '無法使用',
 });
 
 // Presentation order is independent of catalog registration and startup order.
 const PANEL_GROUPS = [
   {
-    label: 'Movement',
+    label: '動態目標',
     ids: [
       'satellites',
       'flights',
@@ -27,11 +27,11 @@ const PANEL_GROUPS = [
     ],
   },
   {
-    label: 'Cameras',
+    label: '攝影機',
     ids: ['cctv', 'alpr-cameras'],
   },
   {
-    label: 'Infrastructure',
+    label: '基礎設施',
     ids: [
       'military-installations',
       'local-datacenters',
@@ -40,11 +40,11 @@ const PANEL_GROUPS = [
     ],
   },
   {
-    label: 'Events',
+    label: '事件',
     ids: ['rocket-launches', 'earthquakes', 'local-firms'],
   },
   {
-    label: 'Utilities',
+    label: '工具',
     ids: ['directions', 'radio'],
   },
 ];
@@ -55,12 +55,12 @@ const PANEL_POSITIONS = new Map(
   PANEL_ORDER.map(({ id }, index) => [id, index]),
 );
 const PANEL_LABELS = {
-  'ais-live-vessels': 'Live Vessels',
-  bikeshare: 'Bike Share',
-  cctv: 'Cameras',
-  'alpr-cameras': 'Mapped ALPR Cameras',
-  'local-datacenters': 'Data Centers',
-  'local-firms': 'Active Fires',
+  'ais-live-vessels': '即時船艦動態',
+  bikeshare: '共享單車',
+  cctv: '攝影機',
+  'alpr-cameras': '標記 ALPR 攝影機',
+  'local-datacenters': '資料中心',
+  'local-firms': '活躍火點',
 };
 
 function panelLabel(layer) {
@@ -469,16 +469,18 @@ export class LayerPanel {
     const lifecycleState =
       layer.lifecycleState || (layer.enabled ? 'enabled' : 'disabled');
     if (lifecycleState === 'enabling' || lifecycleState === 'disabling') {
-      return `${lifecycleState.toUpperCase()} · ${source}`;
+      const lifecycleLabel =
+        lifecycleState === 'enabling' ? '啟用中' : '停用中';
+      return `${lifecycleLabel} · ${source}`;
     }
     if (layer.lifecycleUncertain) {
-      return `UNCERTAIN · ${source} · lifecycle state requires reconciliation`;
+      return `狀態不確定 · ${source} · 需要重新同步狀態`;
     }
     const presentedError =
       stats.error || stats.lastError || stats.managerRefreshError;
     if (presentedError) {
       if (typeof stats.retryInSec === 'number' && stats.retryInSec > 0) {
-        return `${stateLabel} · ${source} · ${presentedError} · retry ${stats.retryInSec}s`;
+        return `${stateLabel} · ${source} · ${presentedError} · ${stats.retryInSec} 秒後重試`;
       }
       return `${stateLabel} · ${source} · ${presentedError}`;
     }
@@ -491,12 +493,12 @@ export class LayerPanel {
     ) {
       return `${source} · ${stats.statusMessage.trim()}`;
     }
-    const ago = stats.lastUpdate ? this._timeAgo(stats.lastUpdate) : 'never';
+    const ago = stats.lastUpdate ? this._timeAgo(stats.lastUpdate) : '從未';
     if (stats.loading) {
       const loadingLabel =
         typeof stats.loadingLabel === 'string' && stats.loadingLabel.trim()
           ? stats.loadingLabel.trim()
-          : 'loading...';
+          : '載入中…';
       return `${source} · ${loadingLabel}`;
     }
     if (feedState === 'fallback') {
@@ -513,14 +515,14 @@ export class LayerPanel {
         Number.isInteger(rawRowCount) &&
         acceptedRowCount >= 0 &&
         rawRowCount > acceptedRowCount
-          ? `${acceptedRowCount} of ${rawRowCount} records accepted`
-          : 'incomplete snapshot';
+          ? `已接受 ${acceptedRowCount} / ${rawRowCount} 筆紀錄`
+          : '快照不完整';
       return `${stateLabel} · ${source} · ${detail} · ${ago}`;
     }
     if (feedState === 'stale') {
       const retry =
         typeof stats.retryInSec === 'number' && stats.retryInSec > 0
-          ? ` · retrying in ${stats.retryInSec}s`
+          ? ` · ${stats.retryInSec} 秒後重試`
           : '';
       return `${stateLabel} · ${source} · ${ago}${retry}`;
     }
@@ -559,12 +561,14 @@ export class LayerPanel {
     button.setAttribute('aria-disabled', String(transitioning));
     button.setAttribute('aria-busy', String(transitioning));
     button.textContent = transitioning
-      ? layer.lifecycleState.toUpperCase()
+      ? layer.lifecycleState === 'enabling'
+        ? '啟用中'
+        : '停用中'
       : uncertain
-        ? 'UNCERTAIN'
+        ? '狀態不確定'
         : layer.enabled
           ? FEED_STATE_LABELS[feedState]
-          : 'OFF';
+          : '關閉';
     const keyGuidance = layerKeyRequirementTooltip(layer);
     // Name the missing key on the control itself: a row reading KEY REQUIRED
     // without saying WHICH key leaves a dead control and no next step. Empty
@@ -585,9 +589,9 @@ export class LayerPanel {
 
   _timeAgo(timestamp) {
     const diff = Math.floor((Date.now() - timestamp) / 1000);
-    if (diff < 5) return 'just now';
-    if (diff < 60) return `${diff}s ago`;
-    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-    return `${Math.floor(diff / 3600)}h ago`;
+    if (diff < 5) return '剛剛';
+    if (diff < 60) return `${diff} 秒前`;
+    if (diff < 3600) return `${Math.floor(diff / 60)} 分鐘前`;
+    return `${Math.floor(diff / 3600)} 小時前`;
   }
 }

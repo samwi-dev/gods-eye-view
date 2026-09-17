@@ -33,7 +33,7 @@ export const KEY_SETUP_KEYS = Object.freeze([
   Object.freeze({
     id: 'google-maps',
     title: 'GOOGLE MAPS',
-    unlocks: 'The photorealistic 3D planet + place search',
+    unlocks: '擬真 3D 地球 + 地點搜尋',
     getUrl: 'https://developers.google.com/maps/documentation/tile/get-api-key',
     envVars: Object.freeze(['GOOGLE_MAPS_API_KEY']),
     tier: 'metered',
@@ -42,7 +42,7 @@ export const KEY_SETUP_KEYS = Object.freeze([
   Object.freeze({
     id: 'google-maps-server',
     title: 'GOOGLE MAPS — SERVER',
-    unlocks: 'Places context + Street View fallback; optional separate key',
+    unlocks: '地點資訊 + 街景備援；可選擇使用獨立金鑰',
     getUrl:
       'https://developers.google.com/maps/documentation/places/web-service/get-api-key',
     envVars: Object.freeze(['GOOGLE_MAPS_SERVER_API_KEY']),
@@ -52,7 +52,7 @@ export const KEY_SETUP_KEYS = Object.freeze([
   Object.freeze({
     id: 'openai',
     title: 'OPENAI',
-    unlocks: 'Voice control — talk to the planet',
+    unlocks: '語音控制 —— 直接對地球說話',
     getUrl: 'https://platform.openai.com/api-keys',
     envVars: Object.freeze(['OPENAI_API_KEY']),
     tier: 'metered',
@@ -60,7 +60,7 @@ export const KEY_SETUP_KEYS = Object.freeze([
   Object.freeze({
     id: 'aisstream',
     title: 'AISSTREAM',
-    unlocks: 'Live ships, worldwide',
+    unlocks: '全球即時船艦動態',
     getUrl: 'https://aisstream.io',
     envVars: Object.freeze(['AISSTREAM_API_KEY']),
     tier: 'free',
@@ -68,7 +68,7 @@ export const KEY_SETUP_KEYS = Object.freeze([
   Object.freeze({
     id: 'firms',
     title: 'NASA FIRMS',
-    unlocks: 'Live active-fire detections',
+    unlocks: '即時活躍火點偵測',
     getUrl: 'https://firms.modaps.eosdis.nasa.gov/api/map_key/',
     envVars: Object.freeze(['FIRMS_MAP_KEY']),
     tier: 'free',
@@ -76,7 +76,7 @@ export const KEY_SETUP_KEYS = Object.freeze([
   Object.freeze({
     id: 'tomtom',
     title: 'TOMTOM',
-    unlocks: 'Real live traffic (keyless runs a simulation)',
+    unlocks: '真實即時路況（未設金鑰時為模擬資料）',
     getUrl: 'https://developer.tomtom.com',
     envVars: Object.freeze(['TOMTOM_API_KEY']),
     tier: 'free',
@@ -84,7 +84,7 @@ export const KEY_SETUP_KEYS = Object.freeze([
   Object.freeze({
     id: 'cesium-ion',
     title: 'CESIUM ION',
-    unlocks: 'Bing imagery map stacks + world terrain',
+    unlocks: 'Bing 影像地圖圖層 + 世界地形',
     getUrl: 'https://ion.cesium.com/tokens',
     envVars: Object.freeze(['CESIUM_ION_TOKEN']),
     tier: 'free',
@@ -93,7 +93,7 @@ export const KEY_SETUP_KEYS = Object.freeze([
   Object.freeze({
     id: 'opensky',
     title: 'OPENSKY',
-    unlocks: 'More flight-polling credits (anonymous works without)',
+    unlocks: '更多飛航資料查詢額度（匿名模式亦可運作）',
     getUrl: 'https://opensky-network.org',
     envVars: Object.freeze(['OPENSKY_CLIENT_ID', 'OPENSKY_CLIENT_SECRET']),
     tier: 'free',
@@ -101,7 +101,7 @@ export const KEY_SETUP_KEYS = Object.freeze([
   Object.freeze({
     id: 'launch-library',
     title: 'LAUNCH LIBRARY',
-    unlocks: 'Higher space-missions request allowance',
+    unlocks: '更高的太空任務查詢額度',
     getUrl: 'https://thespacedevs.com',
     envVars: Object.freeze(['LL2_API_TOKEN']),
     tier: 'free',
@@ -337,7 +337,7 @@ export function knownKeySetupEnvVars() {
 export function keySetupRequirement(id) {
   const entry = KEY_SETUP_KEYS.find((candidate) => candidate.id === id);
   if (!entry || entry.hidden) return '';
-  return `Needs ${entry.envVars.join(' + ')} — add it in Provider Settings`;
+  return `需要 ${entry.envVars.join(' + ')} — 請至供應商設定新增`;
 }
 
 /**

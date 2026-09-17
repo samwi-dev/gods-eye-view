@@ -244,7 +244,7 @@ export function reduceTrafficSyncFeedback(
       // Neutral default: the layer always supplies its own LIVE/SIMULATED
       // label, and a fallback string must never claim a live feed on a
       // keyless build.
-      label: label || 'syncing road network',
+      label: label || '正在同步路網資料',
       progressText: hasProgress ? `${progressPct}%` : '...',
     };
   }
@@ -393,9 +393,9 @@ export function presentLoadingFeedback(state, summary, nowMs) {
     return {
       state: 'retry',
       label: (
-        camera.cameraRetry.error || 'Overpass temporarily unavailable'
+        camera.cameraRetry.error || 'Overpass 暫時無法使用'
       ).toUpperCase(),
-      detail: `ALPR cameras · ${seconds ? `retrying in ${seconds}s` : 'retry pending'}`,
+      detail: `ALPR 攝影機 · ${seconds ? `將於 ${seconds} 秒後重試` : '等待重試'}`,
     };
   }
 
@@ -420,18 +420,18 @@ export function presentLoadingFeedback(state, summary, nowMs) {
   if (!state?.visible) return null;
   if (state.phase === 'terminal') {
     const labels = {
-      complete: 'LOAD COMPLETE',
-      cancelled: 'LOAD CANCELLED',
-      error: 'LOAD FAILED',
+      complete: '載入完成',
+      cancelled: '載入已取消',
+      error: '載入失敗',
     };
     const label =
       state.operation === 'disabling' && state.terminal === 'complete'
-        ? 'LIVE DATA OFF'
+        ? '即時資料已關閉'
         : state.terminal === 'complete' &&
             state.activeIds?.length === 1 &&
             state.activeIds[0] === 'military-installations'
-          ? 'MAPPED SITES LOADED'
-          : labels[state.terminal] || 'LOAD COMPLETE';
+          ? '已載入標記設施'
+          : labels[state.terminal] || '載入完成';
     return { state: state.terminal, label, detail: '' };
   }
   const active = summary.active;
@@ -439,8 +439,8 @@ export function presentLoadingFeedback(state, summary, nowMs) {
     return {
       state: 'loading',
       label: active[0].cameraRetry.retrying
-        ? 'RETRYING ALPR CAMERAS'
-        : 'FETCHING ALPR CAMERAS',
+        ? '正在重試 ALPR 攝影機'
+        : '正在取得 ALPR 攝影機',
       detail: 'OpenStreetMap · Overpass',
     };
   }
@@ -453,17 +453,17 @@ export function presentLoadingFeedback(state, summary, nowMs) {
     return {
       state: 'loading',
       label: active[0].installationRetry.retrying
-        ? 'RETRYING MAPPED SITES'
-        : 'FETCHING MAPPED SITES',
+        ? '正在重試標記設施'
+        : '正在取得標記設施',
       detail: 'OpenStreetMap · Overpass',
     };
   }
   const elapsed = Math.max(0, nowMs - state.startedAt);
   const label = summary.disabling
-    ? 'TURNING OFF LIVE DATA'
+    ? '正在關閉即時資料'
     : summary.refresh
-      ? 'REFRESHING LIVE DATA'
-      : 'LOADING LIVE DATA';
+      ? '正在重新整理即時資料'
+      : '正在載入即時資料';
   const names = active
     .slice(0, 2)
     .map((record) => record.label)

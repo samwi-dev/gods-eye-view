@@ -45,11 +45,11 @@ export {
 import { createRealtimeBackend } from './realtimeBackend.js';
 
 const STATUS = {
-  idle: 'OFF',
-  connecting: 'CONNECTING',
-  listening: 'LISTENING',
-  executing: 'EXECUTING',
-  error: 'ERROR',
+  idle: '關閉',
+  connecting: '連線中',
+  listening: '聆聽中',
+  executing: '執行中',
+  error: '錯誤',
 };
 
 /** Compose voice state owners and coordinate ordered session startup/teardown. */
@@ -267,7 +267,7 @@ export class GevRealtimeController extends RealtimeFacade {
       this.ui.root.remove();
     }
     if (!preserveStatus && !removeUi) {
-      this.setStatus('idle', 'Voice off');
+      this.setStatus('idle', '語音已關閉');
     }
     this.setRadioVoiceDucking(false);
     if (removeUi) this.emitSessionEvent({ type: 'disposed' });
@@ -291,20 +291,20 @@ export class GevRealtimeController extends RealtimeFacade {
     const resolvedDetail =
       status === 'listening' && this.pushToTalkMode
         ? this.pushToTalkKeyHeld
-          ? 'Release Space to send'
-          : 'Hold Space to talk'
+          ? '放開空白鍵以送出'
+          : '按住空白鍵說話'
         : detail;
     const primaryDetail =
       status === 'error'
-        ? 'VOICE UNAVAILABLE'
+        ? '語音功能無法使用'
         : resolvedDetail ||
-          (status === 'idle' ? 'VOICE STANDBY' : 'VOICE ACTIVE');
+          (status === 'idle' ? '語音待命中' : '語音使用中');
     this.ui.detail.textContent = primaryDetail;
     this.ui.detail.title = primaryDetail;
     if (this.ui.errorDetail) {
       this.ui.errorDetail.textContent =
         status === 'error'
-          ? resolvedDetail || 'Voice session could not be started.'
+          ? resolvedDetail || '無法啟動語音連線。'
           : '';
     }
     if (status === 'idle' || status === 'connecting' || status === 'error') {

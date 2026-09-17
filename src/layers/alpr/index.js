@@ -233,9 +233,9 @@ export function createAlprCamerasLayer({ source, services } = {}) {
 
   const alprCamerasLayer = {
     id: LAYER_ID,
-    name: 'ALPR Cameras',
+    name: 'ALPR 攝影機',
     icon: '📷',
-    source: source.label || 'Mapped camera locations',
+    source: source.label || '標記攝影機位置',
     updateInterval: 0,
     statsRefreshInterval: 1000,
     init(viewer) {

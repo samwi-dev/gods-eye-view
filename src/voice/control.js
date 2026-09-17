@@ -12,34 +12,34 @@ export function createVoiceControl({ reset = false } = {}) {
     root.dataset.speaker = 'idle';
     root.innerHTML = `
       <div class="gev-voice-heading">
-        <div class="gev-voice-kicker">AI AGENT</div>
-        <div id="gev-voice-status">OFF</div>
+        <div class="gev-voice-kicker">AI 代理</div>
+        <div id="gev-voice-status">關閉</div>
         <div class="gev-voice-cost">
-          <button id="gev-voice-tier" class="gev-voice-tier-btn" type="button" aria-pressed="false" title="Voice model tier — applies next session">STD</button>
-          <span id="gev-voice-cost-value" class="gev-voice-cost-value" data-level="ok" title="Estimated session cost">~$0.00</span>
+          <button id="gev-voice-tier" class="gev-voice-tier-btn" type="button" aria-pressed="false" title="語音模型等級 — 下次連線生效">標準</button>
+          <span id="gev-voice-cost-value" class="gev-voice-cost-value" data-level="ok" title="本次連線預估費用">~$0.00</span>
         </div>
       </div>
-      <button id="gev-voice-button" type="button" aria-label="Voice control — activate to toggle voice; hold Space to speak" aria-describedby="gev-voice-help">
+      <button id="gev-voice-button" type="button" aria-label="語音控制 — 點擊切換語音；按住空白鍵說話" aria-describedby="gev-voice-help">
         <span class="gev-mic-orbit"><img src="/mic.svg" alt="" /></span>
-        <span class="gev-mic-label">ON/OFF</span>
+        <span class="gev-mic-label">開/關</span>
       </button>
       <div class="gev-voice-visualizer" aria-hidden="true">
         ${Array.from({ length: 15 }, (_, index) => `<span style="--bar:${index}"></span>`).join('')}
       </div>
       <div class="gev-voice-readout">
-        <div id="gev-voice-detail">VOICE STANDBY</div>
+        <div id="gev-voice-detail">語音待命中</div>
       </div>
       <div id="gev-voice-help" class="gev-voice-help-tray" role="tooltip">
-        <span class="gev-voice-help-kicker">VOICE CONTROL</span>
-        <span class="gev-voice-help-detail">Hold Space to speak · tap Space to activate focused controls</span>
+        <span class="gev-voice-help-kicker">語音控制</span>
+        <span class="gev-voice-help-detail">按住空白鍵說話 · 輕按空白鍵可啟用目前焦點的控制項</span>
       </div>
       <div class="gev-voice-error-tray" role="alert" aria-live="assertive">
         <div class="gev-voice-error-header">
-          <span>VOICE SYSTEM ERROR</span>
-          <button class="gev-voice-error-dismiss" type="button">DISMISS</button>
+          <span>語音系統錯誤</span>
+          <button class="gev-voice-error-dismiss" type="button">關閉</button>
         </div>
         <div id="gev-voice-error-detail"></div>
-        <div class="gev-voice-error-hint">Check microphone permission and network access, then try again.</div>
+        <div class="gev-voice-error-hint">請檢查麥克風權限與網路連線，然後再試一次。</div>
       </div>
     `;
     const commandDock = document.getElementById('command-dock');

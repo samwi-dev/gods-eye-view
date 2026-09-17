@@ -139,18 +139,18 @@ export function bindRadioControls() {
     syncTunerTape(resolvedCoordinate);
     if (this._radioTunerValue) {
       this._radioTunerValue.textContent = station
-        ? `CH ${String(slot.stationIndex + 1).padStart(2, '0')} / ${String(this._radioTunerStations.length).padStart(2, '0')}`
-        : 'NO STATIONS';
+        ? `頻道 ${String(slot.stationIndex + 1).padStart(2, '0')} / ${String(this._radioTunerStations.length).padStart(2, '0')}`
+        : '無可用電台';
     }
     if (this._radioTunerStation)
       this._radioTunerStation.textContent =
-        station?.name || 'NO STATION AVAILABLE';
+        station?.name || '無可用電台';
     if (this._radioTunerSlider) {
       this._radioTunerSlider.setAttribute(
         'aria-valuetext',
         station
-          ? `${station.name}, station ${slot.stationIndex + 1} of ${this._radioTunerStations.length}`
-          : 'No station available',
+          ? `${station.name}，第 ${slot.stationIndex + 1} 個電台，共 ${this._radioTunerStations.length} 個`
+          : '無可用電台',
       );
     }
     if (syncStatic)
@@ -301,12 +301,12 @@ export function bindRadioControls() {
       this._radioTunerBandPinnedForNavigation = false;
       if (result.reason === 'station-unavailable') {
         if (this._radioTunerValue)
-          this._radioTunerValue.textContent = 'OFF AIR';
+          this._radioTunerValue.textContent = '無訊號';
         if (this._radioTunerStation)
-          this._radioTunerStation.textContent = 'STATION UNAVAILABLE';
+          this._radioTunerStation.textContent = '電台無法使用';
         this._radioTunerSlider?.setAttribute(
           'aria-valuetext',
-          'Station unavailable after directory refresh',
+          '目錄重新整理後該電台已無法使用',
         );
       }
     }

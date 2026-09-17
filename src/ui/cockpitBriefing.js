@@ -49,7 +49,7 @@ export function setBriefAutoRotate(enabled) {
       'aria-pressed',
       String(this.briefAutoRotateEnabled),
     );
-    const label = this.briefAutoRotateEnabled ? 'CYCLE ON' : 'CYCLE OFF';
+    const label = this.briefAutoRotateEnabled ? '自動輪播：開啟' : '自動輪播：關閉';
     this.briefAutoToggle.textContent = label;
     const help = this.briefAutoRotateEnabled
       ? COCKPIT_BRIEF_CYCLE_ON_HELP
@@ -94,7 +94,7 @@ export function stopBriefRotation() {
 export function updateLocalPosition(info) {
   if (!this.localCoordinates) return;
   if (!Number.isFinite(info.latitude) || !Number.isFinite(info.longitude)) {
-    this.localCoordinates.textContent = 'POSITION UNAVAILABLE';
+    this.localCoordinates.textContent = '座標無法取得';
     return;
   }
   const lat = `${Math.abs(info.latitude).toFixed(3)}°${info.latitude >= 0 ? 'N' : 'S'}`;
@@ -175,14 +175,14 @@ export function renderRegionalBriefStatus(status, info) {
     this.newsStatus.dataset.state = status;
     this.newsStatus.textContent =
       status === 'loading'
-        ? 'ACQUIRING REGIONAL NEWS'
-        : 'REGIONAL NEWS UNAVAILABLE';
+        ? '正在取得區域新聞'
+        : '區域新聞無法取得';
   }
   if (status === 'unavailable') this.newsList?.replaceChildren();
   if (this.localPlace && status === 'loading')
-    this.localPlace.textContent = 'RESOLVING REGION';
+    this.localPlace.textContent = '正在解析區域';
   if (this.localPlace && status === 'unavailable')
-    this.localPlace.textContent = 'REGION UNAVAILABLE';
+    this.localPlace.textContent = '區域無法取得';
   this.updateLocalPosition(info);
 }
 
@@ -193,8 +193,8 @@ export function renderRegionalBrief(payload, info) {
     this.newsStatus.dataset.state = payload?.newsStatus || 'unavailable';
     this.newsStatus.textContent =
       payload?.newsStatus === 'empty'
-        ? 'NO RECENT LOCATION MATCHES'
-        : 'REGIONAL NEWS UNAVAILABLE';
+        ? '近期無相符地點新聞'
+        : '區域新聞無法取得';
   }
   if (this.newsList) {
     this.newsList.replaceChildren(
@@ -207,7 +207,7 @@ export function renderRegionalBrief(payload, info) {
         const title = document.createElement('strong');
         title.textContent = article.title;
         const metadata = document.createElement('span');
-        metadata.textContent = `${article.domain || 'SOURCE'} · ${formatCockpitBriefAge(article.publishedAt)}`;
+        metadata.textContent = `${article.domain || '來源'} · ${formatCockpitBriefAge(article.publishedAt)}`;
         link.append(title, metadata);
         entry.append(link);
         return entry;
@@ -216,7 +216,7 @@ export function renderRegionalBrief(payload, info) {
   }
 
   const placeLabel =
-    payload?.place?.label || payload?.place?.country || 'REGION UNAVAILABLE';
+    payload?.place?.label || payload?.place?.country || '區域無法取得';
   if (this.localPlace) this.localPlace.textContent = placeLabel.toUpperCase();
   this.updateLocalPosition(info);
   const weather = payload?.weather;
@@ -241,8 +241,8 @@ export function renderRegionalBrief(payload, info) {
     );
   if (this.localCloud) {
     this.localCloud.textContent = Number.isFinite(weather?.cloudCoverPct)
-      ? `CLOUD ${Math.round(weather.cloudCoverPct)}%`
-      : 'CLOUD UNKNOWN';
+      ? `雲量 ${Math.round(weather.cloudCoverPct)}%`
+      : '雲量未知';
   }
   if (this.localPrecipitation) {
     this.localPrecipitation.textContent = Number.isFinite(
@@ -254,7 +254,7 @@ export function renderRegionalBrief(payload, info) {
   if (this.signalStream)
     this.signalStream.dataset.regionalStatus = payload?.status || 'partial';
   if (this.briefPageIndex === 1 && this.briefSource) {
-    this.briefSource.textContent = `${String(payload?.newsSource || 'REGIONAL NEWS').toUpperCase()} · LOCATION QUERY`;
+    this.briefSource.textContent = `${String(payload?.newsSource || '區域新聞').toUpperCase()} · 依地點查詢`;
   }
   this.scheduleContextLayout();
 }

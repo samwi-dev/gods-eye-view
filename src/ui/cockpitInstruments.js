@@ -31,7 +31,7 @@ export function updateHud(
   const heading = normalizeHeading(this.heading ?? info.track ?? 0);
   if (this.callsign) {
     this.callsign.textContent =
-      info.callsign || info.registration || info.icao24 || 'AIRCRAFT';
+      info.callsign || info.registration || info.icao24 || '飛機';
   }
   const speedKt = Number.isFinite(info.velocityMps)
     ? info.velocityMps * 1.94384
@@ -127,13 +127,13 @@ export function updateHud(
   }
   if (this.aircraftMeta) {
     const feedState = this.surfaceAcquiring
-      ? 'ACQUIRING SURFACE'
+      ? '正在取得地面資料'
       : this.surfaceFallback
-        ? 'SURFACE FALLBACK'
+        ? '地面備援資料'
         : info.stale
-          ? 'STALE FEED'
-          : 'LIVE TRACK';
-    this.aircraftMeta.textContent = `${info.layerId === 'military' ? 'MILITARY' : 'COMMERCIAL'} · ${feedState} · COURSE ALIGNED`;
+          ? '資料延遲'
+          : '即時追蹤';
+    this.aircraftMeta.textContent = `${info.layerId === 'military' ? '軍用' : '民用'} · ${feedState} · 航向對齊`;
   }
   this.updateRoute(info);
   if (
@@ -158,13 +158,13 @@ export function updateRoute(info) {
   const validDestination =
     Number.isFinite(destination?.lat) && Number.isFinite(destination?.lon);
   const routeLabel = (airport) =>
-    [airport?.code, airport?.name].filter(Boolean).join(' · ') || 'UNKNOWN';
+    [airport?.code, airport?.name].filter(Boolean).join(' · ') || '未知';
   if (this.routeFrom) this.routeFrom.textContent = routeLabel(origin);
   if (this.routeTo) this.routeTo.textContent = routeLabel(destination);
   if (this.routeStatus) {
     this.routeStatus.textContent = validDestination
-      ? 'ARROW · ESTIMATED DIRECTION'
-      : 'ROUTE DATA UNAVAILABLE';
+      ? '箭頭 · 預估方向'
+      : '無可用航線資料';
   }
   if (this.route) this.route.hidden = !origin && !destination;
   if (
@@ -198,7 +198,7 @@ export function updateRoute(info) {
     );
   }
   if (this.routeDirectionLabel) {
-    this.routeDirectionLabel.textContent = `DEST ${String(Math.round(destinationBearing)).padStart(3, '0')}°`;
+    this.routeDirectionLabel.textContent = `目的地 ${String(Math.round(destinationBearing)).padStart(3, '0')}°`;
   }
 }
 
@@ -208,39 +208,39 @@ export function syncWeatherToggle(enabled) {
   this.weatherToggle.setAttribute('aria-pressed', String(active));
   this.weatherToggle.setAttribute(
     'aria-label',
-    `${active ? 'Disable' : 'Enable'} cockpit weather effects`,
+    `${active ? '停用' : '啟用'}座艙天氣效果`,
   );
-  this.weatherToggle.title = `${active ? 'Disable' : 'Enable'} cockpit weather effects`;
-  if (this.weatherState) this.weatherState.textContent = active ? 'ON' : 'OFF';
+  this.weatherToggle.title = `${active ? '停用' : '啟用'}座艙天氣效果`;
+  if (this.weatherState) this.weatherState.textContent = active ? '開啟' : '關閉';
 }
 
 export function setVisionMode(mode, { revealParameters = false } = {}) {
   const next = normalizeCockpitVisionMode(mode);
   this.visionMode = next;
   const inherited = String(
-    this.getInheritedVisionLabel?.() || 'NORMAL',
+    this.getInheritedVisionLabel?.() || '一般',
   ).toUpperCase();
   const labels = {
     optical: inherited,
     crt: 'CRT',
-    nvg: 'NVG',
-    thermal: 'FLIR',
-    noir: 'NOIR',
+    nvg: '夜視',
+    thermal: '熱成像',
+    noir: '黑色電影',
   };
   const names = {
     optical: inherited,
     crt: 'CRT',
-    nvg: 'Night vision',
-    thermal: 'Thermal',
-    noir: 'Noir',
+    nvg: '夜視鏡',
+    thermal: '熱成像',
+    noir: '黑色電影',
   };
   if (this.visionCurrent) {
     this.visionCurrent.dataset.cockpitVision = next;
     this.visionCurrent.setAttribute(
       'aria-label',
-      `Current cockpit vision style: ${names[next]}. Activate for next style.`,
+      `目前座艙視覺模式：${names[next]}。點擊切換至下一個模式。`,
     );
-    this.visionCurrent.title = `Current style: ${names[next]} — click for next`;
+    this.visionCurrent.title = `目前模式：${names[next]} — 點擊切換下一個`;
   }
   if (this.visionCurrentLabel)
     this.visionCurrentLabel.textContent = labels[next];

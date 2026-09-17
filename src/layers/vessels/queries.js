@@ -231,7 +231,7 @@ export function createQueries({
 
     id: 'ais-live-vessels',
 
-    name: 'Live AIS Vessels',
+    name: '即時船艦動態',
 
     icon: '◭',
 

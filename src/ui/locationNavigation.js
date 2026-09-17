@@ -87,8 +87,8 @@ export class LocationNavigation {
       this._currentPoi = null;
       this._collapsePOIRow();
       this._updateLocationMiniStatus();
-    } else if (change.type === 'missing') this._showToast('Location not found');
-    else if (change.type === 'failed') this._showToast('Search failed');
+    } else if (change.type === 'missing') this._showToast('找不到該地點');
+    else if (change.type === 'failed') this._showToast('搜尋失敗');
     else if (change.type === 'settled')
       this._settleLocationSearchUi(change.generation);
     else if (
@@ -273,7 +273,7 @@ export class LocationNavigation {
 
   _toggleOrbit() {
     if (!this._currentTarget) {
-      this._showToast('Fly to a POI first');
+      this._showToast('請先飛往一個地標');
       return;
     }
 

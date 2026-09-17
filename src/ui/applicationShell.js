@@ -930,7 +930,7 @@ export class StyleManager extends ShellFacade {
     const { cctvLayer } = this.services;
     if (this._disposed) return false;
     if (!this._dataManager || !this._dataManager.layers?.has('cctv')) {
-      this._showToast('CCTV layer unavailable');
+      this._showToast('CCTV 圖層無法使用');
       return false;
     }
     const enabled = this._dataManager.isEnabled('cctv');
@@ -1371,7 +1371,7 @@ export class StyleManager extends ShellFacade {
     this._lifetime.listen(this._shareBtn, 'click', async () => {
       const success = await this.shareLinkManager.copyLink();
       if (!this._disposed)
-        this._showToast(success ? 'Link copied!' : 'Copy failed');
+        this._showToast(success ? '連結已複製！' : '複製失敗');
     });
   }
 

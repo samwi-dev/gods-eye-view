@@ -196,7 +196,7 @@ export function createQueries({
 
     id: 'military',
 
-    name: 'Military Flights',
+    name: '軍事飛航',
 
     icon: '🎖️',
 

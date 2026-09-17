@@ -5,7 +5,7 @@ import {
 
 export async function _runUserFacingContextAction(
   operation,
-  message = 'Context could not restore every layer; try again',
+  message = '情資無法還原所有圖層，請再試一次',
   { falseIsFailure = true } = {},
 ) {
   if (this.destroyed) return false;
@@ -222,21 +222,21 @@ export function clearSelectedLayers() {
   const operation = managerOperation
     .then((result) => {
       if (result.targetIds.length === 0) {
-        this.showToast('No selected data layers');
+        this.showToast('沒有已選取的資料圖層');
       } else if (result.notClearedIds.length > 0) {
         this.showToast(
-          `${result.notClearedIds.length} data layer${result.notClearedIds.length === 1 ? '' : 's'} could not be cleared`,
+          `有 ${result.notClearedIds.length} 個資料圖層無法清除`,
         );
       } else {
         this.showToast(
-          `Cleared ${result.clearedIds.length} data layer${result.clearedIds.length === 1 ? '' : 's'}`,
+          `已清除 ${result.clearedIds.length} 個資料圖層`,
         );
       }
       return result;
     })
     .catch((error) => {
       console.warn('[Data] clear selected layers failed', error);
-      this.showToast('Selected data layers could not be cleared');
+      this.showToast('無法清除已選取的資料圖層');
       return {
         targetIds: [],
         items: [],

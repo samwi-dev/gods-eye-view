@@ -171,8 +171,8 @@ export class RadioControls {
         String(radioExpanded),
       );
       const label = radioExpanded
-        ? 'Go to expanded Radio section'
-        : 'Expand Radio section in Context';
+        ? '前往已展開的電台區塊'
+        : '在情資面板中展開電台區塊';
       this._contextRadioToggleBtn.setAttribute('aria-label', label);
       this._contextRadioToggleBtn.title = label;
       return;
@@ -188,12 +188,12 @@ export class RadioControls {
       'aria-expanded',
       String(compactOpen),
     );
-    const action = compactOpen ? 'Close' : 'Open';
+    const action = compactOpen ? '關閉' : '開啟';
     this._contextRadioToggleBtn.setAttribute(
       'aria-label',
-      `${action} compact Radio controls`,
+      `${action}精簡電台控制`,
     );
-    this._contextRadioToggleBtn.title = `${action} compact Radio controls`;
+    this._contextRadioToggleBtn.title = `${action}精簡電台控制`;
   }
 
   destroy() {

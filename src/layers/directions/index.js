@@ -179,8 +179,8 @@ export function directionsRowControls(state) {
  */
 export const POINTER_TOOL_EXITS = Object.freeze({
   draw: Object.freeze({
-    name: 'Draw',
-    leave: 'press Escape twice to leave Draw',
+    name: '繪製',
+    leave: '按兩次 Escape 以離開繪製模式',
   }),
 });
 
@@ -202,8 +202,8 @@ export function pointerBlockedMessage(owner, which) {
   const endpoint = which === 'b' ? 'B' : 'A';
   const known = POINTER_TOOL_EXITS[id];
   const name = known?.name || id;
-  const leave = known?.leave || `turn ${name} off`;
-  return `${name} is active — ${leave}, then set ${endpoint}`;
+  const leave = known?.leave || `關閉${name}`;
+  return `${name}目前使用中 — ${leave}，再設定 ${endpoint} 點`;
 }
 
 /**
@@ -1247,7 +1247,7 @@ export function createDirectionsLayer({ services }) {
 
   const directionsLayer = {
     id: 'directions',
-    name: 'Directions',
+    name: '路線導航',
     icon: '🧭',
     source: 'OSM routing',
     updateInterval: 0,

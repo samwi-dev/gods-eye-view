@@ -35,9 +35,9 @@ export const FIRST_RUN_SESSION_KEY = 'gev:first-run-mission-session:v1';
 export const ENVIRONMENTAL_LABEL_CHOICE = 'ENVIRONMENTAL';
 
 const ENVIRONMENTAL_LABELS = Object.freeze({
-  ENVIRONMENTAL: Object.freeze({ title: 'ENVIRONMENTAL' }),
-  EARTH_WATCH: Object.freeze({ title: 'EARTH WATCH' }),
-  ACTIVE_EVENTS: Object.freeze({ title: 'ACTIVE EVENTS' }),
+  ENVIRONMENTAL: Object.freeze({ title: '環境監測' }),
+  EARTH_WATCH: Object.freeze({ title: '地球觀測' }),
+  ACTIVE_EVENTS: Object.freeze({ title: '即時事件' }),
 });
 
 /**
@@ -92,12 +92,12 @@ export const FIRST_RUN_MISSIONS = Object.freeze({
   contacts: Object.freeze({
     kind: 'context',
     contextMode: 'contacts',
-    busyText: 'Starting live contacts…',
+    busyText: '正在啟動即時接觸目標…',
   }),
   'space-missions': Object.freeze({
     kind: 'context',
     contextMode: 'space-missions',
-    busyText: 'Opening space missions…',
+    busyText: '正在開啟太空任務…',
   }),
   environmental: Object.freeze({
     kind: 'globe',
@@ -115,7 +115,7 @@ export const FIRST_RUN_MISSIONS = Object.freeze({
     // before a launch. LEDGERED post-launch. Until it lands, keyless visitors
     // are judged on the layer row, which tells them the truth.
     layerIds: Object.freeze(['earthquakes', 'local-firms']),
-    busyText: 'Scanning active events…',
+    busyText: '正在掃描即時事件…',
   }),
   explore: Object.freeze({ kind: 'none' }),
 });
@@ -440,7 +440,7 @@ export function initFirstRunExperience({
       button.setAttribute('aria-disabled', String(next));
     if (!status) return;
     if (next)
-      status.textContent = FIRST_RUN_MISSIONS[choice]?.busyText || 'Working…';
+      status.textContent = FIRST_RUN_MISSIONS[choice]?.busyText || '處理中…';
     else if (status.dataset.sticky !== 'true')
       status.textContent = defaultStatus;
   };
@@ -490,7 +490,7 @@ export function initFirstRunExperience({
       Array.isArray(failed) && failed.length ? ` (${failed.join(', ')})` : '';
     if (status) {
       status.dataset.sticky = 'true';
-      status.textContent = `Could not open that mission${detail}. Retry or explore manually.`;
+      status.textContent = `無法開啟該任務${detail}。請重試或改用手動探索。`;
     }
     setBusy(false);
   };
@@ -507,7 +507,7 @@ export function initFirstRunExperience({
     if (!status) return;
     status.dataset.sticky = 'true';
     status.textContent =
-      'This browser is blocking storage, so that could not be saved.';
+      '此瀏覽器已封鎖儲存功能，因此無法儲存此設定。';
   };
 
   const keyboard = createSurfaceKeyboard({

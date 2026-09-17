@@ -18,7 +18,7 @@ export function createInfrastructureLayers(services) {
     {
       id: 'local-datacenters',
       url: datacentersUrl,
-      name: 'Datacenters',
+      name: '資料中心',
       color: '#00ffff', // Cyan
       icon: '▣',
       source: 'Local',
@@ -33,7 +33,7 @@ export function createInfrastructureLayers(services) {
     {
       id: 'local-dams',
       url: damsUrl,
-      name: 'Dams',
+      name: '水壩',
       color: '#0088ff', // Blue
       icon: '▰',
       source: 'USACE',

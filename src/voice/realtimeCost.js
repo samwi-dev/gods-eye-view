@@ -42,7 +42,7 @@ export class RealtimeCost {
     const pendingTier = resolveVoiceModel(this.voiceTier).tier;
     const isMini = pendingTier === 'mini';
     if (this.ui?.tierButton) {
-      this.ui.tierButton.textContent = isMini ? 'MINI' : 'STD';
+      this.ui.tierButton.textContent = isMini ? '迷你' : '標準';
       this.ui.tierButton.setAttribute(
         'aria-pressed',
         isMini ? 'true' : 'false',
@@ -50,17 +50,17 @@ export class RealtimeCost {
       const pendingId = resolveVoiceModel(pendingTier).id;
       this.ui.tierButton.title =
         this.isActive() && state.modelId !== pendingId
-          ? `Next session: ${pendingId} — this session stays on ${state.modelId}`
-          : `Voice model: ${pendingId} — click to switch to ${
-              isMini ? 'standard' : 'mini'
-            }; applies next session`;
+          ? `下次連線將使用：${pendingId} — 本次連線仍維持 ${state.modelId}`
+          : `語音模型：${pendingId} — 點擊切換為${
+              isMini ? '標準' : '迷你'
+            }；下次連線生效`;
     }
     if (this.ui?.costValue) {
       this.ui.costValue.textContent = state.display;
       this.ui.costValue.dataset.level = state.level;
       this.ui.costValue.title =
-        `Estimated session cost on ${state.modelId} — ${state.responses} response(s). ` +
-        `Warns at ${formatCostUsd(state.warnUsd)}, ends the session at ${formatCostUsd(state.capUsd)}.` +
+        `${state.modelId} 本次連線預估費用 — ${state.responses} 則回應。` +
+        `達 ${formatCostUsd(state.warnUsd)} 時警告，達 ${formatCostUsd(state.capUsd)} 時結束連線。` +
         (state.note ? ` ${state.note}` : '');
     }
   }

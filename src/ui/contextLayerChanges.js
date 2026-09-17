@@ -63,7 +63,7 @@ export function _handleContextLayerChange(change) {
               notificationToken,
             });
             return true;
-          }, 'Space Missions cancellation could not restore the previous layer state'),
+          }, '太空任務取消操作無法還原先前的圖層狀態'),
         );
       }
     }
@@ -84,14 +84,14 @@ export function _handleContextLayerChange(change) {
     ) {
       this.showToast(
         change.reason ||
-          'That layer is unavailable in the current Context mode',
+          '該圖層在目前的情資模式下無法使用',
       );
     }
     this._syncContextModeButtons();
     return;
   }
   if (change?.type === 'visibility-failed') {
-    const failureMessage = `${change.layerId} could not ${change.enabled ? 'start' : 'stop'} cleanly`;
+    const failureMessage = `${change.layerId} 無法正常${change.enabled ? '啟動' : '停止'}`;
     // A failed direct Context-shell START has already had its siblings
     // cleared by the visibility guard. Wait outside the synchronous manager
     // notification for this queue to settle, then reconcile the complete

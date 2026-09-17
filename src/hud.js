@@ -192,7 +192,7 @@ export class IntelHUD {
           <div class="hud-mode" id="hud-mode">NORMAL</div>
           <div class="hud-summary-wrap">
             <div class="hud-summary-label">SUMMARY</div>
-            <div class="hud-summary" id="hud-summary">Awaiting telemetry...</div>
+            <div class="hud-summary" id="hud-summary">等待遙測資料...</div>
           </div>
         </div>
       </div>
@@ -624,7 +624,7 @@ export class IntelHUD {
    */
   _composeSummary() {
     const m = this._latestMetrics;
-    if (!m) return 'Awaiting telemetry...';
+    if (!m) return '等待遙測資料...';
 
     const modeEl = document.getElementById('hud-mode');
     const modeLabel = modeEl?.textContent || 'NORMAL';
@@ -798,7 +798,15 @@ export class IntelHUD {
     // Update mode label
     const modeEl = document.getElementById('hud-mode');
     if (modeEl) {
-      const modeNames = { surveillance: 'NVG', thermal: 'FLIR', retro: 'CRT' };
+      const modeNames = {
+        surveillance: '夜視',
+        thermal: '熱成像',
+        retro: 'CRT',
+        normal: '一般',
+        anime: '動畫',
+        noir: '黑色電影',
+        snow: '雪景',
+      };
       modeEl.textContent = modeNames[styleName] || styleName.toUpperCase();
     }
     // Update color scheme

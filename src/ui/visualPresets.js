@@ -146,11 +146,11 @@ export const SHARPEN_SHADER = /* glsl */ `
 
 /** Stable display labels for the active style and inherited Cockpit vision. */
 export const STYLE_STATUS_LABELS = {
-  normal: 'NORMAL',
+  normal: '一般',
   retro: 'CRT',
-  surveillance: 'NVG',
-  thermal: 'FLIR',
-  anime: 'ANIME',
-  noir: 'NOIR',
-  snow: 'SNOW',
+  surveillance: '夜視',
+  thermal: '熱成像',
+  anime: '動畫',
+  noir: '黑色電影',
+  snow: '雪景',
 };

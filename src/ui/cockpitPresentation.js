@@ -32,10 +32,10 @@ export const COCKPIT_GROUND_WAIT_TIMEOUT_MS = 5000;
 export const COCKPIT_BRIEF_ROTATE_MS = 9000;
 
 export const COCKPIT_BRIEF_CYCLE_OFF_HELP =
-  'Cycle briefing pages automatically every 9 seconds (Signals → News → Local). Pauses while you hover or focus the panel. Live signal data refreshes continuously either way.';
+  '每 9 秒自動輪播簡報頁面（訊號 → 新聞 → 在地）。滑鼠懸停或焦點停留在面板上時會暫停。無論如何，即時訊號資料都會持續更新。';
 
 export const COCKPIT_BRIEF_CYCLE_ON_HELP =
-  'Stop automatic page cycling. Previous, Next, and the SIG/NEWS/LOCAL tabs stay available.';
+  '停止自動輪播頁面。上一頁、下一頁與訊號/新聞/在地分頁仍可使用。';
 
 export const COCKPIT_REGIONAL_REFRESH_MS = 5 * 60_000;
 
@@ -44,20 +44,20 @@ export const COCKPIT_REGIONAL_REFRESH_DISTANCE_M = 25_000;
 export const COCKPIT_BRIEF_PAGES = [
   {
     id: 'signals',
-    kicker: 'LIVE SIGNALS',
-    subtitle: 'OBSERVED / MAPPED PINGS',
-    source: 'SOURCE-BACKED EVENTS · NO SYNTHETIC NEWS',
+    kicker: '即時訊號',
+    subtitle: '觀測 / 標記回訊',
+    source: '事件皆有來源根據 · 無合成新聞',
   },
   {
     id: 'news',
-    kicker: 'REGIONAL NEWS',
-    subtitle: 'LATEST LOCATION-MATCHED REPORTING',
-    source: 'GOOGLE NEWS RSS · LOCATION QUERY · RECENT',
+    kicker: '區域新聞',
+    subtitle: '依地點比對之最新報導',
+    source: 'GOOGLE NEWS RSS · 依地點查詢 · 最新',
   },
   {
     id: 'local',
-    kicker: 'LOCAL INFO',
-    subtitle: 'PLACE / CONDITIONS / POSITION',
+    kicker: '在地資訊',
+    subtitle: '地點 / 天氣狀況 / 座標',
     source: 'OPENSTREETMAP · OPEN-METEO · UTC',
   },
 ];
@@ -80,15 +80,15 @@ export function isRenderedOnScreen(element) {
 
 export function formatCockpitBriefAge(value) {
   const timestamp = Date.parse(value);
-  if (!Number.isFinite(timestamp)) return 'TIME UNKNOWN';
+  if (!Number.isFinite(timestamp)) return '時間未知';
   const minutes = Math.max(0, Math.round((Date.now() - timestamp) / 60_000));
-  if (minutes < 60) return `${minutes}M AGO`;
+  if (minutes < 60) return `${minutes} 分鐘前`;
   const hours = Math.round(minutes / 60);
-  return hours < 48 ? `${hours}H AGO` : `${Math.round(hours / 24)}D AGO`;
+  return hours < 48 ? `${hours} 小時前` : `${Math.round(hours / 24)} 天前`;
 }
 
 export function formatCockpitWindDirection(value) {
-  if (!Number.isFinite(value)) return 'DIR UNKNOWN';
+  if (!Number.isFinite(value)) return '方向未知';
   const labels = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
   const normalized = ((value % 360) + 360) % 360;
   return `${labels[Math.round(normalized / 45) % labels.length]} · ${Math.round(normalized)}°`;

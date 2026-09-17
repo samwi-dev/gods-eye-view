@@ -45,7 +45,7 @@ export class SceneControls {
     this.listen(elements.start, 'click', () =>
       this.run('start', this.read().selectedSceneId),
     );
-    this.listen(elements.stop, 'click', () => this.run('stop', 'Stopped'));
+    this.listen(elements.stop, 'click', () => this.run('stop', '已停止'));
     this.listen(elements.import, 'click', () => elements.file?.click());
     this.listen(elements.file, 'change', async () => {
       const file = elements.file?.files?.[0];
@@ -57,7 +57,7 @@ export class SceneControls {
       if (!this.destroyed) elements.file.value = '';
     });
     if (!subscribe) {
-      this.updateStatus('Ready');
+      this.updateStatus('就緒');
       this.setProgress(0);
       this.setButtons(false);
     }
@@ -123,7 +123,7 @@ export class SceneControls {
     const generation = ++this.actionGeneration;
     const failed = () => {
       if (!this.destroyed && generation === this.actionGeneration)
-        this.updateStatus('Scene action failed');
+        this.updateStatus('場景操作失敗');
     };
     try {
       const result = this.actions[action](...args);
@@ -140,8 +140,8 @@ export class SceneControls {
   createScene() {
     if (this.destroyed) return;
     const name = window.prompt(
-      'New scene name',
-      `Scene ${this.read().scenes.length + 1}`,
+      '新場景名稱',
+      `場景 ${this.read().scenes.length + 1}`,
     );
     if (name) this.run('create', name);
   }
@@ -152,7 +152,7 @@ export class SceneControls {
     const scene = state.scenes.find(
       (item) => item.id === state.selectedSceneId,
     );
-    if (scene && window.confirm(`Delete scene "${scene.title}" and all shots?`))
+    if (scene && window.confirm(`確定要刪除場景「${scene.title}」與其所有鏡頭嗎？`))
       this.run('deleteScene');
   }
 
@@ -160,7 +160,7 @@ export class SceneControls {
     if (this.destroyed) return;
     const scene = this.read().scenes.find((item) => item.id === sceneId);
     const shot = scene?.shots.find((item) => item.id === shotId);
-    if (shot && window.confirm(`Delete shot "${shot.title}"?`))
+    if (shot && window.confirm(`確定要刪除鏡頭「${shot.title}」嗎？`))
       this.run('deleteShot', sceneId, shotId);
   }
 

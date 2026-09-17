@@ -298,14 +298,15 @@ export class PanelChrome {
         const panelName =
           panelEl
             .querySelector('.panel-title, .pp-header-label')
-            ?.textContent?.trim() || 'panel';
-        const action = collapsed ? 'Expand' : 'Collapse';
-        btn.title = `${action} ${panelName}`;
-        btn.setAttribute('aria-label', `${action} ${panelName}`);
+            ?.textContent?.trim() || '面板';
+        const action = collapsed ? '展開' : '收合';
+        const sep = /^[A-Za-z0-9]/.test(panelName) ? ' ' : '';
+        btn.title = `${action}${sep}${panelName}`;
+        btn.setAttribute('aria-label', `${action}${sep}${panelName}`);
         if (panelEl.id === 'radio-panel') {
-          const action = collapsed ? 'Expand' : 'Collapse';
-          btn.title = `${action} Radio`;
-          btn.setAttribute('aria-label', `${action} Radio section`);
+          const action = collapsed ? '展開' : '收合';
+          btn.title = `${action}電台`;
+          btn.setAttribute('aria-label', `${action}電台區塊`);
         }
       });
     const dockToggle = panelEl.querySelector(
@@ -315,11 +316,12 @@ export class PanelChrome {
       const panelName =
         panelEl
           .querySelector('.panel-title, .location-toolbar-label')
-          ?.textContent?.trim() || 'panel';
-      const action = collapsed ? 'Expand' : 'Collapse';
+          ?.textContent?.trim() || '面板';
+      const action = collapsed ? '展開' : '收合';
+      const sep = /^[A-Za-z0-9]/.test(panelName) ? ' ' : '';
       dockToggle.setAttribute('aria-expanded', String(!collapsed));
-      dockToggle.setAttribute('aria-label', `${action} ${panelName}`);
-      dockToggle.title = `${action} ${panelName}`;
+      dockToggle.setAttribute('aria-label', `${action}${sep}${panelName}`);
+      dockToggle.title = `${action}${sep}${panelName}`;
     }
     if (panelEl.id === 'radio-panel' && this._contextRadioDetailsBtn) {
       this._contextRadioDetailsBtn.setAttribute(

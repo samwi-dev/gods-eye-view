@@ -1088,8 +1088,8 @@ export class VisualSettings {
       this._celestialBtn.disabled = !styleSupported;
       this._celestialBtn.setAttribute('aria-disabled', String(!styleSupported));
       this._celestialBtn.title = styleSupported
-        ? 'Celestial ring — reveal the full globe'
-        : 'Celestial ring — available in Normal style';
+        ? '天體環 — 顯示完整地球'
+        : '天體環 — 僅限一般風格使用';
     }
     let cameraFocused = false;
     if (nextEnabled && focus) {
@@ -1528,25 +1528,30 @@ export class VisualSettings {
   _updateDetectionButton(modeLabel) {
     const btn = this._detectionBtn;
     const enabled = modeLabel !== 'OFF';
+    const DETECTION_MODE_LABELS_ZH = {
+      SPARSE: '疏',
+      BALANCED: '平衡',
+      DENSE: '密集',
+    };
     btn.setAttribute('aria-pressed', String(enabled));
     btn.setAttribute(
       'aria-label',
       enabled
-        ? `Detection overlay: ${String(modeLabel).toLowerCase()}`
-        : 'Detection overlay: off',
+        ? `偵測疊層：${DETECTION_MODE_LABELS_ZH[modeLabel] || modeLabel}`
+        : '偵測疊層：關閉',
     );
     btn.classList.remove('active', 'god', 'panoptic');
     if (modeLabel === 'SPARSE') {
-      btn.querySelector('.pp-label').textContent = 'SPARSE';
+      btn.querySelector('.pp-label').textContent = '疏';
       btn.classList.add('active');
     } else if (modeLabel === 'BALANCED') {
-      btn.querySelector('.pp-label').textContent = 'BALANCED';
+      btn.querySelector('.pp-label').textContent = '平衡';
       btn.classList.add('active');
     } else if (modeLabel === 'DENSE') {
-      btn.querySelector('.pp-label').textContent = 'DENSE';
+      btn.querySelector('.pp-label').textContent = '密集';
       btn.classList.add('active', 'panoptic');
     } else {
-      btn.querySelector('.pp-label').textContent = 'DETECT';
+      btn.querySelector('.pp-label').textContent = '偵測';
     }
 
     if (this._detectionSliderRow) {

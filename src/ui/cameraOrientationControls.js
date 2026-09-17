@@ -288,15 +288,15 @@ export function bindCameraOrientationControls({
       tiltButton?.setAttribute(
         'aria-label',
         next.tilted
-          ? 'Return map to straight-down view'
-          : 'Tilt map to oblique view',
+          ? '恢復地圖至垂直俯視角'
+          : '將地圖傾斜為斜視角',
       );
     }
     if (!applied || applied.heading !== next.heading) {
       northButton?.style?.setProperty('--camera-heading', `${next.heading}deg`);
       northButton?.setAttribute(
         'aria-label',
-        `Reset map to north up. Current heading ${next.heading} degrees`,
+        `重設地圖朝向正北。目前航向 ${next.heading} 度`,
       );
     }
     applied = next;
